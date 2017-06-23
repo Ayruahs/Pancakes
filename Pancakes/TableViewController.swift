@@ -24,7 +24,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         super.viewDidLoad()
         
         //let searchURL = URL(string: "https://www.w3schools.com/xml/simple.xml")!
-        let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/pancake")!
+        let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/potato")!
 
         
         var request = URLRequest(url: searchURL)
