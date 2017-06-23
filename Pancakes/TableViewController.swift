@@ -14,6 +14,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     var foods: [Food] = []
     var foodName = String()
     var eName: String = String()
+    var preveName = String()
     var foodDate: String = String()
     
     
@@ -23,7 +24,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         super.viewDidLoad()
         
         //let searchURL = URL(string: "https://www.w3schools.com/xml/simple.xml")!
-        let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/eggs")!
+        let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/pancake")!
 
         
         var request = URLRequest(url: searchURL)
@@ -82,25 +83,35 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     
     // 1
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        eName = elementName
-        //print(elementName)
-        if elementName == "Name" {
         
-            foodName = String()
-            //foodDate = String()
+        preveName = eName
+        eName = elementName
+        //print("previous element: "+preveName)
+        if elementName == "Name" {
+            if preveName == "ID"{
+                foodName = String()
+                //foodDate = String()
+            }else{
+                
+            }
         }
     }
     
     // 2
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        
         if elementName == "Name" {
             
-            let food = Food()
-            food.foodName = foodName
-            //food.foodDate = foodDate
+            if preveName == "ID"{
+
+                let food = Food()
+                food.foodName = foodName
+                //food.foodDate = foodDate
             
-            foods.append(food)
+                foods.append(food)
+            }
         }
+        
     }
     
     // 3
@@ -119,7 +130,12 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         //}else{
         //    print("Data empty!!!")
         //}
-        foodName = string
+        if eName == "Name"{
+            if preveName == "ID"{
+
+                foodName += string
+            }
+        }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
