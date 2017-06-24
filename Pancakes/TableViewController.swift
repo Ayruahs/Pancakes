@@ -17,6 +17,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     var preveName = String()
     var foodDate: String = String()
     
+    var URLString: String = String()
     
 
 
@@ -24,37 +25,22 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         super.viewDidLoad()
         
         //let searchURL = URL(string: "https://www.w3schools.com/xml/simple.xml")!
-        let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/potato")!
+        //let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/potato")!
 
+        let searchURL = URL(string: URLString)!
         
         var request = URLRequest(url: searchURL)
         request.setValue("application/xml", forHTTPHeaderField: "Accept")
         request.httpMethod = "GET"
         
         let queue:OperationQueue = OperationQueue()
-        /*
-        let session = URLSession(configuration: URLSessionConfiguration.default)
-        
-        session.dataTask(with: request) {
-            (data, response, error) -> Void in
-            let xmlParser = XMLParser(data: data!)
-            xmlParser.delegate = self
-            xmlParser.parse()
-            
-            if !xmlParser.parse(){
-                print("messed up parsing")
-                print(xmlParser.parserError)
-            }
-            
-        }.resume()
-        */
         
         
-            NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
-            (response, data, error) -> Void in
-            let xmlParser = XMLParser(data: data!)
-            xmlParser.delegate = self
-            xmlParser.parse()
+        NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
+        (response, data, error) -> Void in
+        let xmlParser = XMLParser(data: data!)
+        xmlParser.delegate = self
+        xmlParser.parse()
         }
         
     
@@ -118,18 +104,6 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         //let data = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
-        //if (!data.isEmpty) {
-        //if eName == "Street" {
-        //    foodName = string
-        //}
-        //} else if eName == "Date" {
-        //    foodDate += string
-        //    print(foodDate)
-        //    }
-        
-        //}else{
-        //    print("Data empty!!!")
-        //}
         if eName == "Name"{
             if preveName == "ID"{
 
@@ -140,30 +114,33 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath) 
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
         
         let food = foods[indexPath.row]
     
-        
         cell.textLabel?.text = food.foodName
+        
         //cell.detailTextLabel?.text = food.foodDate
+        
         cell.detailTextLabel?.text = "LOOOGABAROOGA"
+        
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(foods.count)
+        
         return foods.count
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
     }
-    */
+    
 
 }
