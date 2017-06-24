@@ -23,9 +23,6 @@ class TableViewController: UITableViewController, XMLParserDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //let searchURL = URL(string: "https://www.w3schools.com/xml/simple.xml")!
-        //let searchURL = URL(string:"https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/potato")!
 
         let searchURL = URL(string: URLString)!
         
@@ -38,9 +35,9 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
         (response, data, error) -> Void in
-        let xmlParser = XMLParser(data: data!)
-        xmlParser.delegate = self
-        xmlParser.parse()
+            let xmlParser = XMLParser(data: data!)
+            xmlParser.delegate = self
+            xmlParser.parse()
         }
         
     

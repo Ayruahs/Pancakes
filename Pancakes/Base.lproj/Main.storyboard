@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OIt-4d-8LQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,63 +22,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Purdue P" translatesAutoresizingMaskIntoConstraints="NO" id="2R3-mc-d7t">
+                                <rect key="frame" x="77" y="72" width="221" height="132"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="132" id="L4R-3c-mGp"/>
+                                </constraints>
+                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="LjX-KU-aeb">
-                                <rect key="frame" x="43" y="251" width="300" height="225"/>
+                                <rect key="frame" x="37" y="226" width="300" height="161"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search food:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmH-4w-NIm">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="42"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Eg: Eggs" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-Qk-dgd">
-                                        <rect key="frame" x="0.0" y="57" width="300" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="91" width="300" height="70"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="Ic2-n8-ajW"/>
+                                        </constraints>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5a9-ca-Owo">
-                                        <rect key="frame" x="0.0" y="130.5" width="300" height="94.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Search">
-                                            <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
                                         <connections>
-                                            <action selector="searchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e6e-8Z-6Wh"/>
-                                            <segue destination="OIt-4d-8LQ" kind="show" identifier="Show Table" id="AEo-pg-otL"/>
+                                            <action selector="keyboardSearch:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="YZW-a5-QOR"/>
                                         </connections>
-                                    </button>
+                                    </textField>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="LjX-KU-aeb" secondAttribute="height" multiplier="4:3" id="7d9-0I-Yt0"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="225" id="ZS6-bW-m8E"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="tm4-XR-5oB"/>
-                                </constraints>
                             </stackView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Purdue P" translatesAutoresizingMaskIntoConstraints="NO" id="2R3-mc-d7t">
-                                <rect key="frame" x="77" y="55" width="220" height="132"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="132" id="jdW-nE-OYa"/>
-                                    <constraint firstAttribute="width" secondItem="2R3-mc-d7t" secondAttribute="height" multiplier="5:3" id="rxc-04-rRA"/>
-                                    <constraint firstAttribute="width" secondItem="2R3-mc-d7t" secondAttribute="height" multiplier="5:3" id="siR-bf-bC2"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="2R3-mc-d7t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="35" id="Hdt-c2-83Y"/>
-                            <constraint firstItem="LjX-KU-aeb" firstAttribute="top" secondItem="2R3-mc-d7t" secondAttribute="bottom" constant="64" id="PFf-Gk-evL"/>
-                            <constraint firstItem="LjX-KU-aeb" firstAttribute="centerX" secondItem="2R3-mc-d7t" secondAttribute="centerX" constant="6" id="nlp-f2-ktH"/>
-                            <constraint firstItem="2R3-mc-d7t" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="wuN-iY-2v7"/>
+                            <constraint firstItem="LjX-KU-aeb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2Nf-0K-krb"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="2SL-lY-cP5"/>
+                            <constraint firstItem="LjX-KU-aeb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="21" id="Jlh-Cm-bfw"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LjX-KU-aeb" secondAttribute="bottom" constant="280" id="Qsi-aw-Vqq"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="centerX" secondItem="LjX-KU-aeb" secondAttribute="centerX" id="X2Y-wz-0Sg"/>
+                            <constraint firstItem="LjX-KU-aeb" firstAttribute="top" secondItem="2R3-mc-d7t" secondAttribute="bottom" constant="22" id="nX8-ku-fTh"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="pOa-gj-l0J"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="mmb-X2-rOh"/>
                     <connections>
                         <outlet property="foodSearchField" destination="qFl-Qk-dgd" id="qGE-Za-Zcl"/>
+                        <segue destination="ZBz-kg-B7F" kind="show" identifier="Show Table" id="8m5-9a-HjB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-303" y="-141"/>
+            <point key="canvasLocation" x="514" y="-325"/>
         </scene>
         <!--Search Results-->
         <scene sceneID="vUh-kt-zSX">
@@ -130,7 +122,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01X-K0-JBL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="632.79999999999995" y="542.87856071964018"/>
+            <point key="canvasLocation" x="514" y="404"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="D7D-nA-8eD">
@@ -141,12 +133,12 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="ZBz-kg-B7F" kind="relationship" relationship="rootViewController" id="iq1-kM-hgD"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="SnW-qq-WMM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ovh-zg-f1S" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="580" y="-207"/>
+            <point key="canvasLocation" x="-694" y="-306"/>
         </scene>
     </scenes>
     <resources>
