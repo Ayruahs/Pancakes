@@ -14,11 +14,16 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     var foods: [Food] = []
     var foodName = String()
     var eName: String = String()
-    var preveName = String()
+    var foodMeal: String = String()
     var foodDate: String = String()
     var foodLocation: String = String()
     
-    var relevantFoodFound = false
+    var nameOfFood = String()
+    
+    var weAreInsideName = false
+    var weAreInsideID = false
+    
+    var nameOfCurrentElement = String()
     
     var URLString: String = String()
     
@@ -62,7 +67,6 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         
         let queue:OperationQueue = OperationQueue()
         
-        
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
             (response, data, error) -> Void in
             let xmlParser = XMLParser(data: data!)
@@ -81,54 +85,93 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     // 1
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
-        preveName = eName
         eName = elementName
+    
+        if elementName == "Allergen"{
+            weAreInsideID = false
+            nameOfCurrentElement = "Allergen"
+        }
         
-        if elementName == "Name" {
-            if preveName == "ID"{
-                relevantFoodFound = true
-                foodName = String()
-                //foodDate = String()
-                foodLocation = String()
+        if elementName == "ID"{
+            weAreInsideID = true
+        }
+        if weAreInsideID{
+            if elementName == "Name"{
+                nameOfCurrentElement = "Name"
+                weAreInsideName = true
+                weAreInsideID = false
             }
         }
-        if elementName == "Location" {
-            relevantFoodFound = true
-            foodLocation = String()
+        
+        
+        if elementName == "Location"{
+            nameOfCurrentElement = "Location"
         }
+        if elementName == "Date"{
+            nameOfCurrentElement = "Date"
+        }
+        if elementName == "Meal"{
+            nameOfCurrentElement = "Meal"
+        }
+        
+        
     }
     
     // 2
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if relevantFoodFound{
+        if weAreInsideName{
             let food = Food()
-            
-            if elementName == "Name" {
-                if preveName == "ID"{
-                    food.foodName = foodName
-                    //food.foodDate = foodDate
-                }
+            if elementName == "Name"{
+                nameOfCurrentElement = ""
             }
-            if elementName == "Location" {
+            if elementName == "Location"{
+                nameOfCurrentElement = ""
+            }
+            if elementName == "Date"{
+                nameOfCurrentElement = ""
+            }
+            if elementName == "Meal"{
+                food.foodName = foodName
+                food.foodDate = foodDate
                 food.foodLocation = foodLocation
+                food.foodMeal = foodMeal
+                nameOfCurrentElement = ""
+                foods.append(food)
             }
-            
-            foods.append(food)
         }
-        relevantFoodFound = false
+        
+        if elementName == "ItemSchedule"{
+            weAreInsideName = false
+            
+        }
+        
     }
     
     // 3
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        
-        if eName == "Name"{
-            if preveName == "ID"{
-                foodName += string
-            }
+        if nameOfCurrentElement == "Name"{
+            nameOfFood = string
         }
-        if eName == "Location"{
+        
+        if nameOfCurrentElement == "Location"{
             foodLocation = string
         }
+        if nameOfCurrentElement == "Date"{
+            foodDate = string
+        }
+        if nameOfCurrentElement == "Meal"{
+            foodName = nameOfFood
+            foodMeal = string
+        }
+    }
+    
+    
+    
+    
+    func parserDidEndDocument(parser: XMLParser){
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.tableView.reloadData()
+        })
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -139,8 +182,10 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             let food = foods[indexPath.row]
     
             cell.textLabel?.text = food.foodName
-        
-            cell.detailTextLabel?.text = "At " + food.foodLocation
+            
+            let index = food.foodDate.index(food.foodDate.startIndex, offsetBy: 10)
+
+            cell.detailTextLabel?.text = "At " + food.foodLocation + " for " + food.foodMeal + " on " + food.foodDate.substring(to: index)
         
             //cell.detailTextLabel?.text = "LOOOGABAROOGA"
         } else{
