@@ -16,14 +16,44 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     var eName: String = String()
     var preveName = String()
     var foodDate: String = String()
+    var foodLocation: String = String()
+    
+    var relevantFoodFound = false
     
     var URLString: String = String()
     
-
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        }
+    
+    @IBOutlet var searchResults: UITableView!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let searchURL = URL(string: URLString)!
+         
+        var request = URLRequest(url: searchURL)
+        request.setValue("application/xml", forHTTPHeaderField: "Accept")
+        request.httpMethod = "GET"
+         
+        let queue:OperationQueue = OperationQueue()
+         
+        NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
+        (response, data, error) -> Void in
+        let xmlParser = XMLParser(data: data!)
+        xmlParser.delegate = self
+        xmlParser.parse()
+        
+        
+        }
+        
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         let searchURL = URL(string: URLString)!
         
         var request = URLRequest(url: searchURL)
@@ -34,16 +64,13 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         
         
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
-        (response, data, error) -> Void in
+            (response, data, error) -> Void in
             let xmlParser = XMLParser(data: data!)
             xmlParser.delegate = self
             xmlParser.parse()
         }
-        
-    
+        //self.searchResults.reloadData()
     }
-    
-
     
     // MARK: - Table view data source
     
@@ -51,61 +78,56 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         return 1
     }
     
-    /*
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "foodCell", for: indexPath as IndexPath)
-        
-        let food = foods[indexPath.row]
-        
-        cell.textLabel?.text = food.foodName
-        cell.detailTextLabel?.text = food.foodDate
-        
-        return cell
-    }
-    */
-    
     // 1
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
         preveName = eName
         eName = elementName
-        //print("previous element: "+preveName)
+        
         if elementName == "Name" {
             if preveName == "ID"{
+                relevantFoodFound = true
                 foodName = String()
                 //foodDate = String()
-            }else{
-                
+                foodLocation = String()
             }
+        }
+        if elementName == "Location" {
+            relevantFoodFound = true
+            foodLocation = String()
         }
     }
     
     // 2
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        
-        if elementName == "Name" {
+        if relevantFoodFound{
+            let food = Food()
             
-            if preveName == "ID"{
-
-                let food = Food()
-                food.foodName = foodName
-                //food.foodDate = foodDate
-            
-                foods.append(food)
+            if elementName == "Name" {
+                if preveName == "ID"{
+                    food.foodName = foodName
+                    //food.foodDate = foodDate
+                }
             }
+            if elementName == "Location" {
+                food.foodLocation = foodLocation
+            }
+            
+            foods.append(food)
         }
-        
+        relevantFoodFound = false
     }
     
     // 3
     func parser(_ parser: XMLParser, foundCharacters string: String) {
-        //let data = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         
         if eName == "Name"{
             if preveName == "ID"{
-
                 foodName += string
             }
+        }
+        if eName == "Location"{
+            foodLocation = string
         }
     }
     
@@ -113,31 +135,39 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         // Configure the cell...
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
         
-        let food = foods[indexPath.row]
+        if foods.count > 0{
+            let food = foods[indexPath.row]
     
-        cell.textLabel?.text = food.foodName
+            cell.textLabel?.text = food.foodName
         
-        //cell.detailTextLabel?.text = food.foodDate
+            cell.detailTextLabel?.text = "At " + food.foodLocation
         
-        cell.detailTextLabel?.text = "LOOOGABAROOGA"
+            //cell.detailTextLabel?.text = "LOOOGABAROOGA"
+        } else{
+            cell.textLabel?.text = "No results :("
+            cell.detailTextLabel?.text = "Try searching again"
+        }
         
         return cell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(foods.count)
-        
-        return foods.count
+        if foods.count == 0 {
+            return 1
+        } else{
+            return foods.count
+        }
     }
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-    }
+    //}
     
 
 }

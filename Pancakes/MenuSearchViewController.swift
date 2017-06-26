@@ -16,6 +16,11 @@ class MenuSearchViewController: UIViewController {
     }
     @IBOutlet weak var foodSearchField: UITextField!
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    
     
     // Prepare for Segue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -25,8 +30,9 @@ class MenuSearchViewController: UIViewController {
                 if let destNavController = segue.destination as? TableViewController{
                     //let targetController = destNavController.view as! TableViewController
                     
-                    destNavController.URLString = "https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/" + foodSearchField.text!
+                    let searchTerm = foodSearchField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).replacingOccurrences(of: " ", with: "_")
                     
+                    destNavController.URLString = "https://api.hfs.purdue.edu/menus/v2/items/searchUpcoming/" + searchTerm
                 }
                 
             default: break
