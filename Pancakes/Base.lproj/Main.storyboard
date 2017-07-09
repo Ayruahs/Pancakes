@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OIt-4d-8LQ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OIt-4d-8LQ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -22,45 +22,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Purdue P" translatesAutoresizingMaskIntoConstraints="NO" id="2R3-mc-d7t">
-                                <rect key="frame" x="77" y="72" width="221" height="132"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="132" id="L4R-3c-mGp"/>
-                                </constraints>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="LjX-KU-aeb">
-                                <rect key="frame" x="37" y="226" width="300" height="161"/>
+                                <rect key="frame" x="37.5" y="270" width="300" height="127"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Search food:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmH-4w-NIm">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="76"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41" id="tLz-7m-Q81"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Eg: Eggs" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-Qk-dgd">
-                                        <rect key="frame" x="0.0" y="91" width="300" height="70"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="Ic2-n8-ajW"/>
-                                        </constraints>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Eg: Eggs" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-Qk-dgd">
+                                        <rect key="frame" x="0.0" y="56" width="300" height="71"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="search"/>
                                         <connections>
                                             <action selector="keyboardSearch:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="YZW-a5-QOR"/>
                                         </connections>
                                     </textField>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="kay-aT-m62"/>
+                                </constraints>
                             </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Purdue P" translatesAutoresizingMaskIntoConstraints="NO" id="2R3-mc-d7t">
+                                <rect key="frame" x="77" y="87" width="221" height="131"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="LjX-KU-aeb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2Nf-0K-krb"/>
-                            <constraint firstItem="2R3-mc-d7t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="2SL-lY-cP5"/>
-                            <constraint firstItem="LjX-KU-aeb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="21" id="Jlh-Cm-bfw"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LjX-KU-aeb" secondAttribute="bottom" constant="280" id="Qsi-aw-Vqq"/>
-                            <constraint firstItem="2R3-mc-d7t" firstAttribute="centerX" secondItem="LjX-KU-aeb" secondAttribute="centerX" id="X2Y-wz-0Sg"/>
-                            <constraint firstItem="LjX-KU-aeb" firstAttribute="top" secondItem="2R3-mc-d7t" secondAttribute="bottom" constant="22" id="nX8-ku-fTh"/>
-                            <constraint firstItem="2R3-mc-d7t" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="pOa-gj-l0J"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="centerX" secondItem="LjX-KU-aeb" secondAttribute="centerX" id="AGu-QQ-URm"/>
+                            <constraint firstItem="LjX-KU-aeb" firstAttribute="top" secondItem="2R3-mc-d7t" secondAttribute="bottom" constant="52" id="H3s-0h-Pyt"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="J1E-k0-d7U"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="23" id="bTc-HF-4Wq"/>
+                            <constraint firstItem="2R3-mc-d7t" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="61" id="f8I-yE-U3e"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="LjX-KU-aeb" secondAttribute="bottom" constant="270" id="gyF-bY-WCe"/>
+                            <constraint firstItem="LjX-KU-aeb" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="n0l-O4-U1Q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mmb-X2-rOh"/>
@@ -91,17 +91,17 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="eHa-Mp-wKh">
-                                            <rect key="frame" x="15" y="17" width="48" height="30"/>
+                                            <rect key="frame" x="15" y="21" width="42.5" height="26.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ziu-Ir-D9T">
-                                            <rect key="frame" x="15" y="47" width="72" height="25.5"/>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" id="ziu-Ir-D9T">
+                                            <rect key="frame" x="15" y="47.5" width="61.5" height="21"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="18"/>
+                                            <color key="textColor" red="0.098039217289999994" green="0.098039217289999994" blue="0.098039217289999994" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>

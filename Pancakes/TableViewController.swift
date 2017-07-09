@@ -168,10 +168,11 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     
     
     
-    func parserDidEndDocument(parser: XMLParser){
+    func parserDidEndDocument(_ parser: XMLParser){
         DispatchQueue.main.async(execute: { () -> Void in
             self.tableView.reloadData()
-        })
+        }
+        )
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
