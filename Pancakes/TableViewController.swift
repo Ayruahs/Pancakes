@@ -8,7 +8,11 @@
 
 import UIKit
 
+//let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
 
+//alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
+
+//self.present(alert, animated: true, completion: nil)
 class TableViewController: UITableViewController, XMLParserDelegate {
     
     var foods: [Food] = []
@@ -50,32 +54,14 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         let xmlParser = XMLParser(data: data!)
         xmlParser.delegate = self
         xmlParser.parse()
-        
-        
         }
         
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        let searchURL = URL(string: URLString)!
-        
-        var request = URLRequest(url: searchURL)
-        request.setValue("application/xml", forHTTPHeaderField: "Accept")
-        request.httpMethod = "GET"
-        
-        let queue:OperationQueue = OperationQueue()
-        
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue) {
-            (response, data, error) -> Void in
-            let xmlParser = XMLParser(data: data!)
-            xmlParser.delegate = self
-            xmlParser.parse()
-        }
-        //self.searchResults.reloadData()
     }
-    
+ 
     // MARK: - Table view data source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -165,15 +151,16 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         }
     }
     
-    
-    
-    
     func parserDidEndDocument(_ parser: XMLParser){
         DispatchQueue.main.async(execute: { () -> Void in
             self.tableView.reloadData()
         }
         )
     }
+    
+    //override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        //print("Button Pressed")
+    //}
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
