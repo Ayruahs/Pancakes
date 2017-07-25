@@ -15,6 +15,7 @@
 		FC5741731ED87BA30008DE39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC5741711ED87BA30008DE39 /* LaunchScreen.storyboard */; };
 		FC57417E1ED87BA30008DE39 /* PancakesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC57417D1ED87BA30008DE39 /* PancakesTests.swift */; };
 		FC57418D1EEC61160008DE39 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC57418C1EEC61160008DE39 /* Food.swift */; };
+		FC657B5F1F27E4ED00C9D4F6 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC657B5E1F27E4ED00C9D4F6 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		FC57417D1ED87BA30008DE39 /* PancakesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PancakesTests.swift; sourceTree = "<group>"; };
 		FC57417F1ED87BA30008DE39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FC57418C1EEC61160008DE39 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		FC657B5E1F27E4ED00C9D4F6 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,7 @@
 				FC57416A1ED87BA30008DE39 /* MenuSearchViewController.swift */,
 				FC3374391EF96A5B00500EF9 /* TableViewController.swift */,
 				FC57418C1EEC61160008DE39 /* Food.swift */,
+				FC657B5E1F27E4ED00C9D4F6 /* CustomTableViewCell.swift */,
 				FC57416F1ED87BA30008DE39 /* Assets.xcassets */,
 				FC5741711ED87BA30008DE39 /* LaunchScreen.storyboard */,
 				FC5741741ED87BA30008DE39 /* Info.plist */,
@@ -208,6 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC57416B1ED87BA30008DE39 /* MenuSearchViewController.swift in Sources */,
+				FC657B5F1F27E4ED00C9D4F6 /* CustomTableViewCell.swift in Sources */,
 				FC57418D1EEC61160008DE39 /* Food.swift in Sources */,
 				FC5741691ED87BA30008DE39 /* AppDelegate.swift in Sources */,
 				FC33743A1EF96A5B00500EF9 /* TableViewController.swift in Sources */,

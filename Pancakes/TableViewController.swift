@@ -161,7 +161,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     //override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         //print("Button Pressed")
     //}
-    
+    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
@@ -175,15 +175,84 @@ class TableViewController: UITableViewController, XMLParserDelegate {
 
             cell.detailTextLabel?.text = "At " + food.foodLocation + " for " + food.foodMeal + " on " + food.foodDate.substring(to: index)
         
-            //cell.detailTextLabel?.text = "LOOOGABAROOGA"
         } else{
             cell.textLabel?.text = "No results :("
             cell.detailTextLabel?.text = "Try searching again"
         }
         
+        /*
+        let track_Button = UIButton()
+        track_Button.setTitle("Track", for: .normal)
+        track_Button.setTitleColor(UIColor.blue, for: .normal)
+        track_Button.frame = CGRect(x: 50, y: 50, width: 100, height: 40)
+        track_Button.backgroundColor = UIColor.gray
+        track_Button.addTarget(self, action: Selector("track_Button_Pressed:"), for: .touchUpInside)
+        cell.addSubview(track_Button)
+        */
+        //cell.accessoryType = .disclosureIndicator
+        
+        return cell
+    }*/
+    /*
+    func track_Button_Pressed(sender: UIButton!) {
+        
+        // Track Functionality
+        print("Add Track Functionality here")
+    }
+ */
+
+    // !!!!!!!!!!!!! FOR THE CUSTOMTABLEVIEWCELL CLASS !!!!!!!!!!!!!
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell" , for: indexPath) as! CustomTableViewCell
+        
+        if foods.count > 0{
+            let food = foods[indexPath.row]
+            
+            cell.mainLabel?.text = food.foodName
+            
+            let index = food.foodDate.index(food.foodDate.startIndex, offsetBy: 10)
+            
+            cell.subtitleLabel?.text = "At " + food.foodLocation + " for " + food.foodMeal + " on " + food.foodDate.substring(to: index)
+            
+        } else{
+            cell.mainLabel?.text = "No results :("
+            cell.subtitleLabel?.text = "Try searching again"
+        }
+        
+        //func showAlert(sender:UIButton!)
+        //{
+            
+        //    print(sender.tag)
+        //}
+        
+        //cell.reminderButton.tag=indexPath.row
+        //cell.reminderButton.addTarget(self, action: Selector(("showAlert:")), for:UIControlEvents.touchUpInside)
+        
+        
+        
+        /*
+         let track_Button = UIButton()
+         track_Button.setTitle("Track", for: .normal)
+         track_Button.setTitleColor(UIColor.blue, for: .normal)
+         track_Button.frame = CGRect(x: 50, y: 50, width: 100, height: 40)
+         track_Button.backgroundColor = UIColor.gray
+         track_Button.addTarget(self, action: Selector("track_Button_Pressed:"), for: .touchUpInside)
+         cell.addSubview(track_Button)
+         */
+        //cell.accessoryType = .disclosureIndicator
+        
         return cell
     }
-
+    
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        
+        print("Table Row Pressed")
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(foods.count)
         if foods.count == 0 {
