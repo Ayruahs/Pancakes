@@ -17,7 +17,7 @@ class CustomTableViewCell: UITableViewCell {
     @IBOutlet weak var reminderButton: UIButton!
     
     
-    @IBAction func sendReminder(_ sender: Any) {
+    /*@IBAction func sendReminder(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: "Set reminder for this food item?", preferredStyle: UIAlertControllerStyle.alert)
         
         //Add actions
@@ -30,7 +30,7 @@ class CustomTableViewCell: UITableViewCell {
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
         UIApplication.shared.delegate?.window??.rootViewController?.present(alert, animated: true, completion: nil)
-    }
+    }*/
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

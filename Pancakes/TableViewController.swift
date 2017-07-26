@@ -7,12 +7,8 @@
 //
 
 import UIKit
+import UserNotifications
 
-//let alert = UIAlertController(title: "Alert", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-
-//alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.default, handler: nil))
-
-//self.present(alert, animated: true, completion: nil)
 class TableViewController: UITableViewController, XMLParserDelegate {
     
     var foods: [Food] = []
@@ -31,6 +27,17 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     
     var URLString: String = String()
     
+    
+    func initNotificationSetupCheck() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert])
+        { (success, error) in
+            if success {
+                print("Permission Granted")
+            } else {
+                print("There was a problem!")
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -205,9 +212,10 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell" , for: indexPath) as! CustomTableViewCell
         
         if foods.count > 0{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell" , for: indexPath) as! CustomTableViewCell
+            
             let food = foods[indexPath.row]
             
             cell.mainLabel?.text = food.foodName
@@ -216,34 +224,58 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             cell.subtitleLabel?.text = "At " + food.foodLocation + " for " + food.foodMeal + " on " + food.foodDate.substring(to: index)
             
+            cell.reminderButton.addTarget(self, action: #selector(addReminder(sender:)), for: .touchUpInside)
+            
+            cell.reminderButton.accessibilityHint = food.foodName
+            
+            return cell
+            
         } else{
-            cell.mainLabel?.text = "No results :("
-            cell.subtitleLabel?.text = "Try searching again"
+            let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath) 
+            
+            cell.textLabel?.text = "No results for chosen food"
+            cell.detailTextLabel?.text = "Try searching for another food"
+            
+            return cell
         }
         
-        //func showAlert(sender:UIButton!)
-        //{
+
+    }
+    func addReminder(sender: UIButton!) {
+        let alert = UIAlertController(title: nil, message: "Set reminder for this food item?", preferredStyle: UIAlertControllerStyle.alert)
+        
+        //Add actions
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler:  {(action:UIAlertAction!) in
             
-        //    print(sender.tag)
-        //}
+            //Figure what data you need to send back for creating alert text and notification
+            
+            self.initNotificationSetupCheck()
+            
+            let str: String = "You have set a reminder for " + sender.accessibilityHint!
+            
+            print(str)
+            
+            
+            //Notification Set-up
+            // TODO: Time Interval Change, identifier to name of food+date as string
+            let notification = UNMutableNotificationContent()
         
-        //cell.reminderButton.tag=indexPath.row
-        //cell.reminderButton.addTarget(self, action: Selector(("showAlert:")), for:UIControlEvents.touchUpInside)
+            notification.title = "Your favorite food is coming up!"
         
+            notification.body = "[FoodName] at [Location] in three hours"
+            
+            let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            
+            let request = UNNotificationRequest(identifier: "notification1", content: notification, trigger: notificationTrigger)
+            
+            UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
+            
+            
+        }))
         
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
         
-        /*
-         let track_Button = UIButton()
-         track_Button.setTitle("Track", for: .normal)
-         track_Button.setTitleColor(UIColor.blue, for: .normal)
-         track_Button.frame = CGRect(x: 50, y: 50, width: 100, height: 40)
-         track_Button.backgroundColor = UIColor.gray
-         track_Button.addTarget(self, action: Selector("track_Button_Pressed:"), for: .touchUpInside)
-         cell.addSubview(track_Button)
-         */
-        //cell.accessoryType = .disclosureIndicator
-        
-        return cell
+        UIApplication.shared.delegate?.window??.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
     // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -254,7 +286,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(foods.count)
+        
         if foods.count == 0 {
             return 1
         } else{
