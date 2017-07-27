@@ -226,7 +226,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             cell.reminderButton.addTarget(self, action: #selector(addReminder(sender:)), for: .touchUpInside)
             
-            cell.reminderButton.accessibilityHint = food.foodName
+            cell.reminderButton.accessibilityHint = food.foodName + "|" + food.foodLocation + "|" + food.foodDate
             
             return cell
             
@@ -251,22 +251,49 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             self.initNotificationSetupCheck()
             
-            let str: String = "You have set a reminder for " + sender.accessibilityHint!
+            var foodComponents = sender.accessibilityHint!.components(separatedBy: "|")
             
-            print(str)
+            let str: String = "You have set a reminder for " + foodComponents[0]
             
+            print("\n\n\n\n", str)
+            
+            foodComponents[2] = foodComponents[2].replacingOccurrences(of: "T", with: " ")
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
+            let date = dateFormatter.date(from: foodComponents[2])
+            
+            let now = NSDate()
+            
+            let formatter = DateComponentsFormatter()
+            
+            formatter.allowedUnits = [.minute]
+            
+            formatter.unitsStyle = .full
+            
+            let difference = formatter.string(from: now as Date, to: date!)!
+            
+            let differenceInMinutes = Int(difference.components(separatedBy: " ")[0].replacingOccurrences(of: ",", with: ""))!
             
             //Notification Set-up
-            // TODO: Time Interval Change, identifier to name of food+date as string
             let notification = UNMutableNotificationContent()
-        
+            
             notification.title = "Your favorite food is coming up!"
-        
-            notification.body = "[FoodName] at [Location] in three hours"
             
-            let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+            let notificationIdentifier = foodComponents[0] + foodComponents[1] + foodComponents[2]
             
-            let request = UNNotificationRequest(identifier: "notification1", content: notification, trigger: notificationTrigger)
+            var notificationInterval = Int()
+            if (differenceInMinutes < 3600){
+                notificationInterval = differenceInMinutes * 60
+                notification.body = foodComponents[0] + " at " + foodComponents[1] + " in \(differenceInMinutes) minutes."
+            }else{
+                notificationInterval = (differenceInMinutes * 60) - 3600
+                notification.body = foodComponents[0] + " at " + foodComponents[1] + " in an hour."
+            }
+            
+            let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(notificationInterval), repeats: false)
+            
+            let request = UNNotificationRequest(identifier: notificationIdentifier, content: notification, trigger: notificationTrigger)
             
             UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
             
