@@ -258,12 +258,23 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             print("\n\n\n\n", str)
             
             foodComponents[2] = foodComponents[2].replacingOccurrences(of: "T", with: " ")
+            print(foodComponents)
+            
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-            let date = dateFormatter.date(from: foodComponents[2])
+            dateFormatter.timeZone = TimeZone(identifier: "America/Indianapolis")
             
-            let now = NSDate()
+            
+            var date = dateFormatter.date(from: foodComponents[2])
+            
+            let currentTimeinLocalTime = Date()
+            let stringTime = dateFormatter.string(from: currentTimeinLocalTime)  //Date() as NSDate
+            let now = dateFormatter.date(from: stringTime)
+            
+            if (date == nil){
+                date = now
+            }
             
             let formatter = DateComponentsFormatter()
             
@@ -271,7 +282,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             formatter.unitsStyle = .full
             
-            let difference = formatter.string(from: now as Date, to: date!)!
+            let difference = formatter.string(from: now!, to: date!)!
             
             let differenceInMinutes = Int(difference.components(separatedBy: " ")[0].replacingOccurrences(of: ",", with: ""))!
             
@@ -283,13 +294,20 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             let notificationIdentifier = foodComponents[0] + foodComponents[1] + foodComponents[2]
             
             var notificationInterval = Int()
-            if (differenceInMinutes < 3600){
+            
+            if (differenceInMinutes == 0){
+                notificationInterval = 3
+                notification.body = "The API did not return a valid date for " + foodComponents[0]
+            }
+            else if (differenceInMinutes < 60){
                 notificationInterval = differenceInMinutes * 60
                 notification.body = foodComponents[0] + " at " + foodComponents[1] + " in \(differenceInMinutes) minutes."
             }else{
                 notificationInterval = (differenceInMinutes * 60) - 3600
                 notification.body = foodComponents[0] + " at " + foodComponents[1] + " in an hour."
             }
+            
+            print(notificationInterval/3600)
             
             let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(notificationInterval), repeats: false)
             
