@@ -165,51 +165,6 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         )
     }
     
-    //override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
-        //print("Button Pressed")
-    //}
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // Configure the cell...
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell" , for: indexPath)
-        
-        if foods.count > 0{
-            let food = foods[indexPath.row]
-    
-            cell.textLabel?.text = food.foodName
-            
-            let index = food.foodDate.index(food.foodDate.startIndex, offsetBy: 10)
-
-            cell.detailTextLabel?.text = "At " + food.foodLocation + " for " + food.foodMeal + " on " + food.foodDate.substring(to: index)
-        
-        } else{
-            cell.textLabel?.text = "No results :("
-            cell.detailTextLabel?.text = "Try searching again"
-        }
-        
-        /*
-        let track_Button = UIButton()
-        track_Button.setTitle("Track", for: .normal)
-        track_Button.setTitleColor(UIColor.blue, for: .normal)
-        track_Button.frame = CGRect(x: 50, y: 50, width: 100, height: 40)
-        track_Button.backgroundColor = UIColor.gray
-        track_Button.addTarget(self, action: Selector("track_Button_Pressed:"), for: .touchUpInside)
-        cell.addSubview(track_Button)
-        */
-        //cell.accessoryType = .disclosureIndicator
-        
-        return cell
-    }*/
-    /*
-    func track_Button_Pressed(sender: UIButton!) {
-        
-        // Track Functionality
-        print("Add Track Functionality here")
-    }
- */
-
-    // !!!!!!!!!!!!! FOR THE CUSTOMTABLEVIEWCELL CLASS !!!!!!!!!!!!!
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
         
@@ -255,21 +210,19 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             let str: String = "You have set a reminder for " + foodComponents[0]
             
-            print("\n\n\n\n", str)
+            print("\n\n\n\n" + str)
             
             foodComponents[2] = foodComponents[2].replacingOccurrences(of: "T", with: " ")
-            print(foodComponents)
-            
             
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd hh:mm:ss"
-            dateFormatter.timeZone = TimeZone(identifier: "America/Indianapolis")
+            dateFormatter.timeZone = TimeZone(secondsFromGMT: -4*3600)   //Doesn't matter maybe?
             
             
             var date = dateFormatter.date(from: foodComponents[2])
             
             let currentTimeinLocalTime = Date()
-            let stringTime = dateFormatter.string(from: currentTimeinLocalTime)  //Date() as NSDate
+            let stringTime = dateFormatter.string(from: currentTimeinLocalTime)
             let now = dateFormatter.date(from: stringTime)
             
             if (date == nil){
@@ -282,9 +235,11 @@ class TableViewController: UITableViewController, XMLParserDelegate {
             
             formatter.unitsStyle = .full
             
-            let difference = formatter.string(from: now!, to: date!)!
+            let difference = formatter.string(from: now!, to: date!)!  //REMINDER: Timezone doesn't matter because the difference is being used
             
             let differenceInMinutes = Int(difference.components(separatedBy: " ")[0].replacingOccurrences(of: ",", with: ""))!
+            
+            print(String(differenceInMinutes) + " minutes diff")
             
             //Notification Set-up
             let notification = UNMutableNotificationContent()
@@ -307,7 +262,7 @@ class TableViewController: UITableViewController, XMLParserDelegate {
                 notification.body = foodComponents[0] + " at " + foodComponents[1] + " in an hour."
             }
             
-            print(notificationInterval/3600)
+            print("The notification interval in seconds is: \(notificationInterval), in minutes is: \(notificationInterval/60)")
             
             let notificationTrigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(notificationInterval), repeats: false)
             
@@ -323,11 +278,8 @@ class TableViewController: UITableViewController, XMLParserDelegate {
         UIApplication.shared.delegate?.window??.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
-    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
         
-        print("Table Row Pressed")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
